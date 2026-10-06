@@ -2,8 +2,9 @@ from pathlib import Path
 import numpy as np
 from tokenizers import Tokenizer
 from tokenizers.models import BPE
-from tokenizers.pre_tokenizers import Whitespace
 from tokenizers.trainers import BpeTrainer
+from tokenizers.pre_tokenizers import ByteLevel
+from tokenizers.decoders import ByteLevel as ByteLevelDecoder
 
 
 # path of a processed corpus file (cleaned text)
@@ -32,9 +33,16 @@ text = CORPUS_FILE.read_text(encoding="utf-8")
 print(f"Characters: {len(text):,}")
 print(f"Words:      {len(text.split()):,}")
 
-# Create BPE tokenizer
-tokenizer = Tokenizer(BPE(unk_token="[UNK]"))
-tokenizer.pre_tokenizer = Whitespace()
+# Train BPE tokenizer
+tokenizer = Tokenizer(
+    BPE(unk_token="[UNK]")
+)
+
+tokenizer.pre_tokenizer = ByteLevel(
+    add_prefix_space=False
+)
+
+tokenizer.decoder = ByteLevelDecoder()
 
 trainer = BpeTrainer(
     vocab_size=VOCAB_SIZE,
