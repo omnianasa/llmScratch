@@ -9,7 +9,7 @@ from tokenizers.decoders import ByteLevel as ByteLevelDecoder
 
 # path of a processed corpus file (cleaned text)
 
-CORPUS_FILE = Path("../data/processed/one_thousand_and_one_nights_clean.txt")
+CORPUS_FILE = Path("../processed/one_thousand_and_one_nights_clean.txt")
 
 TOKENIZER_DIR = Path("tokenizer")
 TOKENIZER_FILE = TOKENIZER_DIR / "one_thousand_and_one_nights_bpe.json"

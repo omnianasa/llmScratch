@@ -1,6 +1,6 @@
 from pathlib import Path
 
-path = Path("processed/one_thousand_and_one_nights_clean.txt")
+path = Path("../processed/one_thousand_and_one_nights_clean.txt")
 
 text = path.read_text(encoding="utf-8")
 
