@@ -10,6 +10,7 @@ class SelfAttention(nn.Module):
         self.query = nn.Linear(embedding_dim,embedding_dim)
         self.key = nn.Linear(embedding_dim,embedding_dim)
         self.value = nn.Linear(embedding_dim,embedding_dim)
+        self.attention_dropout = nn.Dropout(p=0.1)
 
     def forward(self, x, return_attention=False):
         Q = self.query(x)
@@ -39,6 +40,9 @@ class SelfAttention(nn.Module):
             scores,
             dim=-1
         )
+
+        # Dropout
+        attention_weights = self.attention_dropout(attention_weights)
 
         output = attention_weights @ V
 

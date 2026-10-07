@@ -84,3 +84,30 @@ class TestSelfAttention:
         assert torch.all(
             attention_weights[0].triu(diagonal=1) == 0
         )
+
+    def test_attention_dropout(self):
+
+        batch_size = 1
+        context_length = 4
+        embedding_dim = 8
+
+        model = SelfAttention(embedding_dim=embedding_dim)
+        model.train()
+        x = torch.randn(
+            batch_size,
+            context_length,
+            embedding_dim
+        )
+
+        output, attention_weights = model(x,return_attention=True)
+        assert output.shape == (
+            batch_size,
+            context_length,
+            embedding_dim
+        )
+
+        assert attention_weights.shape == (
+            batch_size,
+            context_length,
+            context_length
+        )
