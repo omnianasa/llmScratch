@@ -57,3 +57,30 @@ class TestSelfAttention:
             context_length,
             context_length
         )
+
+    def test_causal_mask(self):
+
+        batch_size = 1
+        context_length = 4
+        embedding_dim = 8
+
+        model = SelfAttention(
+            embedding_dim=embedding_dim
+        )
+
+        x = torch.randn(
+            batch_size,
+            context_length,
+            embedding_dim
+        )
+
+        output, attention_weights = model(
+            x,
+            return_attention=True
+        )
+
+        # Future tokens must receive zero attention
+
+        assert torch.all(
+            attention_weights[0].triu(diagonal=1) == 0
+        )
